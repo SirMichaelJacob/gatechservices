@@ -1,0 +1,124 @@
+﻿@model gatech.Models.UserAccount
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+}
+
+@*  Inner Dashboard*@
+@*<div class="col-lg-9 col-md-8 bg-white">
+    <div class="container mt-4">
+        <div class="row">*@
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-header">
+            User Information @if (@ViewBag.IncompleteProfile == true)
+            {
+                <label class="list-group-item text-secondary">
+                    Your Profile is Incomplete
+                </label>
+            }
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name </h5>
+            <p class="card-text">Email: @Model.Email </p>
+            <p class="card-text">Phone: @Model.ContactNumber</p>
+        </div>
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-header text-info">
+            Quick View
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item">@Html.ActionLink(String.Format("View Your Rota for {0}", @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month)), "ViewRota", "ShiftSchedule", new { year = DateTime.Now.Year, month = DateTime.Now.Month, userId = ViewBag.UserId }, new { area = "" })</li>
+
+
+                <li class="list-group-item">Order 3</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header text-info">
+                Profile
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    if (@ViewBag.error != null)
+                    {
+                        <div>
+                            <label class="text-danger">@ViewBag.error</label>
+                        </div>
+                    }
+                    <ul class="list-group">
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <Label class="control-label col-md-4">Email:</Label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <Label class="control-label col-md-4">Phone:</Label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ContactNumber, new { htmlAttributes = new { @class = "form-control", @type = "Number" } })
+                                    @Html.ValidationMessageFor(model => model.ContactNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <Label class="control-label col-md-4">Date Of Birth:</Label>
+                                <div class="col-md-10">
+                                    @Html.Label(Model.DateOfBirth.ToShortDateString(), new { @class = "text-primary my-2" })
+                                    @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <Label class="control-label col-md-4">Gender:</Label>
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.Gender, new SelectList(new[]
+                                    {
+                                        new { Id = "Male", Name = "Male" },
+                                        new { Id = "Female", Name = "Female" },
+                                        new { Id = "Other", Name = "Other" }
+                                    }, "Id", "Name"), "Select Gender", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <Label class="control-label col-md-4">Address:</Label>
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Address, new { htmlAttributes = new { @class = "form-control"} })
+                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10 mt-2">
+                            <button class="btn btn-block btn-success">Save</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>

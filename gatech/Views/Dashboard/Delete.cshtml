@@ -1,0 +1,51 @@
+﻿@model gatech.Models.JoinUserRole
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+}
+
+<h2>Delete User from Role</h2>
+
+<h4 class="text-danger">Are you sure you want to delete " @Html.DisplayTextFor(model => model.Name) - @Html.DisplayFor(model => model.RoleName)"?</h4>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Label("Name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+       
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.Label("Role")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color my-4">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to List of Users Access", "Index", "JoinUR")
+        </div>
+    }
+</div>

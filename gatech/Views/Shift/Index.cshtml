@@ -1,0 +1,68 @@
+﻿@model gatech.Models.Shift
+
+
+@{
+    
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+}
+
+@{
+    int previousYear = DateTime.Now.Year - 1;
+    int nextTwoYears = DateTime.Now.Year + 2;
+}
+
+<h2>Care Schedule</h2>
+
+<div class="accordion" id="yearAccordion">
+    @foreach (int year in Enumerable.Range(previousYear, nextTwoYears - previousYear + 1))
+    {
+        <div class="card">
+            <div class="card-header" id="yearHeading_@year">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#yearCollapse_@year" aria-expanded="true" aria-controls="yearCollapse_@year">
+                        @year
+                    </button>
+                </h5>
+            </div>
+
+            <div id="yearCollapse_@year" class="collapse" aria-labelledby="yearHeading_@year" data-parent="#yearAccordion">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (int month in Enumerable.Range(1, 12))
+                            {
+                                <tr>
+                                    <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)</td>
+                                    <td>
+                                        <!-- Add actions or links related to the specific month here -->
+                                        @*@Html.ActionLink("Generate","Generate", "Schedule", new { year=year,month=month}, new { })*@
+                                        @Html.ActionLink("Show Care Schedule", "Generate", "ShiftSchedule", new { year = year, month = month }, new { })
+                                        @*<a href="#">View Schedule</a>*@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@*@section scripts {
+    <script>
+        // Collapse and expand the card panels on click
+        $(document).ready(function () {
+            $('.btn-link').on('click', function () {
+                $(this).closest('.card').find('.collapse').collapse('toggle');
+            });
+        });
+    </script>
+}*@

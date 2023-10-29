@@ -1,0 +1,55 @@
+﻿@model gatech.Models.UserRole
+
+@{
+    ViewBag.Title = "Assign Roles";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+}
+
+<h2>Create</h2>
+<div class="my-5">
+    @Html.ActionLink("Dashboard", "Index", "Dashboard", new { area = "" }, new { @class = "text-warning" })  /  @Html.ActionLink("All Users", "Index", "joinUR", new { area = "" }, new { @class = "text-warning" }) / Add Role
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal my-5">
+        <h5>Assign Roles to User</h5>
+
+        <hr />
+        @if (@ViewBag.error != null)
+        {
+            <div>
+                <label class="text-danger">@ViewBag.error</label>
+            </div>
+        }
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <Label class="control-label col-md-2">User</Label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.UserId, new SelectList(ViewBag.users, "Value", "Text"), new { @class = "col-md-10 form-control" })
+                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <Label class="control-label col-md-2">Role</Label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.RoleId, new SelectList(ViewBag.roles, "Value", "Text"), new { @class = "col-md-10 form-control" })
+                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 my-4">
+                <input type="submit" value="Assign Role" class="btn btn-warning" />
+            </div>
+        </div>
+    </div>
+}
+
+<div class="my-4">
+    @Html.ActionLink("Back to Access List", "Index", "joinUR")
+</div>

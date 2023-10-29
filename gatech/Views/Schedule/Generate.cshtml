@@ -1,0 +1,55 @@
+﻿@model IEnumerable<gatech.Models.Shift>
+
+@{
+     Layout = "~/Views/Shared/_DashLayout.cshtml";
+}
+
+<h2>Generated @ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Back to Year View", "Index", "Shift", new { }, new { @class = "nav-link" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ShiftName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShiftDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.Display("Staff")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShiftName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShiftDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndTime)
+        </td>
+        <td></td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ShiftId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ShiftId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ShiftId })
+        </td>
+    </tr>
+}
+
+</table>

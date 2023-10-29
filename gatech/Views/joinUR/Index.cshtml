@@ -1,0 +1,49 @@
+﻿@model IEnumerable<gatech.Models.JoinUserRole>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+}
+
+<h2>Manage Users</h2>
+<div class="my-5">
+    @Html.ActionLink("Dashboard","Index","Dashboard", new { area = "" }, new {@class="text-warning" })  /  All Users
+</div>
+
+<p>
+    @Html.ActionLink("Assign Role", "Create","Dashboard")
+</p>
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayName("Role")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoleName)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |*@
+            @Html.ActionLink("Remove Role", "Delete","Dashboard", new { urid = item.URId, uid = item.UserId, rid = item.RoleId }, null)
+        </td>
+    </tr>
+}
+
+</table>

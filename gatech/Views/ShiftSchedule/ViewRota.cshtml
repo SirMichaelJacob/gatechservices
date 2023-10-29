@@ -1,0 +1,109 @@
+﻿
+@model IEnumerable<gatech.Models.Shift>
+
+@{
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+}
+<h3 class="my-4">Rota for @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@ViewBag.Month) @ViewBag.Year </h3>
+
+<p>
+    @Html.ActionLink("Home", "Index", "Dashboard", new { area = "" }, new { @class = "text-warning" }) / @Html.ActionLink("Back to Yearly View", "MyRota", "ShiftSchedule", new { area = "" }, new { @class = "text-warning" })
+</p>
+<div class="accordion" id="clientAccordion">
+
+    <div class="card">
+
+        <div class="card-body">
+            <table class="table table-bordered table-hover table-striped">
+                <tr>
+                    <th>Client</th>
+                    <th>
+                        Shift Type
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Start Time
+                    </th>
+                    <th>
+                        End Time
+                    </th>
+                    <th>
+                        Caregiver
+                    </th>
+                    <th>Action</th>
+                </tr>
+                @foreach (var shift in Model)
+                {
+                    <tr>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => shift.ShiftName)*@
+                            @Html.Action("getClientName", "ShiftSchedule", new { clientId=shift.ClientId})
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => shift.ShiftName)
+                        </td>
+                        <td>
+                            @shift.ShiftDate.ToLongDateString()
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => shift.StartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => shift.EndTime)
+                        </td>
+                        <td>
+                            @Html.Action("getUser", "ShiftSchedule", new { userid = shift.CaregiverId })
+
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "ShiftSchedule", new { ClientId = shift.ClientId, CaregiverId = shift.CaregiverId, ShiftName = shift.ShiftName, ShiftDate = shift.ShiftDate, StartTime = shift.StartTime, EndTime = shift.EndTime }, null)
+                            @*<button class="btn btn-info btn-sm text-white">Update</button>*@
+                        </td>
+                    </tr>
+
+
+                }
+            </table>
+        </div>
+
+    </div>
+
+</div>
+<style>
+    .accordion-header {
+        background-color: #f5f5f5;
+        padding: 10px;
+        cursor: pointer;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .accordion-body {
+        display: none;
+        background-color: #fff;
+        padding: 10px;
+    }
+
+    .accordion-header.active {
+        background-color: #ccc;
+    }
+
+        .accordion-header.active + .accordion-body {
+            display: block;
+        }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var accordions = document.querySelectorAll(".accordion");
+
+        accordions.forEach(function (accordion) {
+            var header = accordion.querySelector(".accordion-header");
+
+            header.addEventListener("click", function () {
+                accordion.classList.toggle("active");
+            });
+        });
+    });
+</script>

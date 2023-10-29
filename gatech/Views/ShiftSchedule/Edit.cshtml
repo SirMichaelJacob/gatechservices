@@ -1,0 +1,72 @@
+﻿@model gatech.Models.Shift
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+}
+
+<h3>Edit</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal my-3">
+        <h4>Shift Schedule for @Html.Action("getClient","ShiftSchedule",new {clientId= Model.ClientId })</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ShiftId)
+
+        <div class="form-group">
+            @Html.Label("Shift Type", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ShiftName, new { htmlAttributes = new { @class = "form-control", @disabled = "True" } })
+                @Html.ValidationMessageFor(model => model.ShiftName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Shift Date", htmlAttributes: new { @class = "control-label col-md-2",})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ShiftDate, new { htmlAttributes = new { @class = "form-control", @disabled = "True" } })
+                @Html.ValidationMessageFor(model => model.ShiftDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", @disabled="True"} })
+                @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control", @disabled = "True" } })
+                @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Caregiver", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                
+                @Html.DropDownListFor(model => model.CaregiverId, new SelectList(ViewBag.users, "Value", "Text"), new { @class = "col-md-10 form-control" })
+
+    
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 my-3">
+                <input type="submit" value="Save" class="btn btn-warning" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
